@@ -8,14 +8,14 @@ namespace MatrixTransformations
     public partial class Form1 : Form
     {
         // Axes
-        AxisX x_axis;
-        AxisY y_axis;
+        private readonly AxisX x_axis;
+        private readonly AxisY y_axis;
 
         // Objects
-        Square square;
-        Square orangeSquare;
-        Square cyanSquare;
-        Square darkBlueSquare;
+        private readonly Square square;
+        private readonly Square orangeSquare;
+        private readonly Square cyanSquare;
+        private readonly Square darkBlueSquare;
 
         // Window dimensions
         const int WIDTH = 800;
@@ -25,35 +25,9 @@ namespace MatrixTransformations
         {
             InitializeComponent();
 
-            this.Width = WIDTH;
-            this.Height = HEIGHT;
-            this.DoubleBuffered = true;
-
-            Vector v1 = new Vector();
-            Console.WriteLine(v1);
-            Vector v2 = new Vector(1, 2, 0);
-            Console.WriteLine(v2);
-            Vector v3 = new Vector(2, 6, 0);
-            Console.WriteLine(v3);
-            Vector v4 = v2 + v3;
-            Console.WriteLine(v4); // 3, 8
-
-            Matrix m1 = Matrix.Identity();
-            Console.WriteLine(m1); // 1, 0, 0, 1
-            Matrix m2 = new Matrix(2, 4, 0,
-                                   -1, 3, 0,
-                                   0, 0, 0);
-            Console.WriteLine(m2);
-
-            Console.WriteLine("Plus");
-            Console.WriteLine(m1 + m2); // 3, 4, -1, 4
-            Console.WriteLine("Minus");
-            Console.WriteLine(m1 - m2); // -1, -4, 1, -2
-            Console.WriteLine("Matrix x matrix");
-            Console.WriteLine(m2 * m2); // 0, 20, -5, 5
-
-            Console.WriteLine("Matrix x vector");
-            Console.WriteLine(m2 * v3); // 28, 16
+            Width = WIDTH;
+            Height = HEIGHT;
+            DoubleBuffered = true;
 
             // Define axes
             x_axis = new AxisX(200);

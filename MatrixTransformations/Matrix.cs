@@ -5,7 +5,7 @@ namespace MatrixTransformations
 {
     public class Matrix
     {
-        float[,] mat = new float[4, 4];
+        private readonly float[,] mat = new float[4, 4];
 
         public Matrix() => 
             mat[mat.GetLength(0) - 1, mat.GetLength(1) - 1] = 1f;
@@ -51,8 +51,7 @@ namespace MatrixTransformations
             return m;
         }
 
-        public static Matrix operator *(float f, Matrix m1) => 
-            m1 * f;
+        public static Matrix operator *(float f, Matrix m1) => m1 * f;
         public static Matrix operator *(Matrix m1, float f)
         {
             Matrix m = new Matrix();
@@ -82,11 +81,8 @@ namespace MatrixTransformations
             return m;
         }
 
-        public static Vector operator *(Matrix m1, Vector v)
-        {
-            Matrix res = m1 * new Matrix(v);
-            return new Vector(res.mat[0, 0], res.mat[1, 0], res.mat[2, 0]);
-        }
+        public static Vector operator *(Matrix m1, Vector v) =>
+            (m1 * new Matrix(v)).ToVector();
 
         public static Matrix Identity() => 
             new Matrix(1, 0, 0,
@@ -94,9 +90,9 @@ namespace MatrixTransformations
                        0, 0, 1);
 
         public static Matrix ScaleMatrix(float s) =>
-            Identity() * new Matrix(s, 0, 0, 
-                                    0, s, 0,
-                                    0, 0, s);
+            new Matrix(s, 0, 0, 
+                       0, s, 0,
+                       0, 0, s);
 
         public static Matrix RotateMatrix(float deg)
         {
@@ -116,8 +112,31 @@ namespace MatrixTransformations
             Matrix m = Identity();
             m.mat[0, m.mat.GetLength(1) - 1] = vec.x;
             m.mat[1, m.mat.GetLength(1) - 1] = vec.y;
+            m.mat[2, m.mat.GetLength(1) - 1] = vec.z;
             return m;
         }
+
+        public static Matrix InverseMatrix(float phi, float theta, float distance)
+        {
+            Matrix m = new Matrix(
+                (float)-Math.Sin(theta), (float)Math.Cos(theta), 0,
+                (float)-(Math.Cos(theta) * Math.Cos(phi)), (float)-(Math.Cos(phi) * Math.Sin(theta)), (float)Math.Sin(phi),
+                (float)(Math.Cos(theta) * Math.Sin(phi)), (float)(Math.Sin(theta) * Math.Sin(phi)), (float)Math.Cos(phi)
+            );
+
+            m.mat[2, 3] = -distance;
+
+            return m;
+        }
+
+        public static Matrix ProjectionMatrix(float distance, float vecz)
+        {
+            float p = -(distance / vecz);
+            return new Matrix(p, 0, 0,
+                              0, p, 0,
+                              0, 0, 1);
+        }
+            
 
         public override string ToString()
         {

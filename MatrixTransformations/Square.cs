@@ -5,23 +5,23 @@ namespace MatrixTransformations
 {
     public class Square
     {
-        Color color;
-        private int size;
-        private float weight;
+        private readonly Color color;
+        private readonly float weight;
 
         public List<Vector> vertexbuffer;
 
         public Square(Color color, int size = 100, float weight = 3)
         {
             this.color = color;
-            this.size = size;
             this.weight = weight;
 
-            vertexbuffer = new List<Vector>();
-            vertexbuffer.Add(new Vector(-size, -size, 0));
-            vertexbuffer.Add(new Vector(size, -size, 0));
-            vertexbuffer.Add(new Vector(size, size, 0));
-            vertexbuffer.Add(new Vector(-size, size, 0));
+            vertexbuffer = new List<Vector>
+            {
+                new Vector(-size, -size, 0),
+                new Vector(size, -size, 0),
+                new Vector(size, size, 0),
+                new Vector(-size, size, 0)
+            };
         }
 
         public void Draw(Graphics g, List<Vector> vb)

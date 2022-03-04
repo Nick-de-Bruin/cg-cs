@@ -3,16 +3,16 @@ using System.Drawing;
 
 namespace MatrixTransformations
 {
-    public class AxisX
+    public class AxisZ
     {
         public List<Vector> vertexbuffer;
 
-        public AxisX(int size=100)
+        public AxisZ(int size = 100)
         {
             vertexbuffer = new List<Vector>
             {
                 new Vector(0, 0, 0),
-                new Vector(size, 0, 0)
+                new Vector(0, 0, size)
             };
         }
 
