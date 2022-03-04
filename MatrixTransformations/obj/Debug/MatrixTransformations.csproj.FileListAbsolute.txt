@@ -1,0 +1,11 @@
+C:\Work\School\CG C#\MatrixTransformations\bin\Debug\MatrixTransformations.exe.config
+C:\Work\School\CG C#\MatrixTransformations\bin\Debug\MatrixTransformations.exe
+C:\Work\School\CG C#\MatrixTransformations\bin\Debug\MatrixTransformations.pdb
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.AssemblyReference.cache
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.SuggestedBindingRedirects.cache
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.Form1.resources
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.Properties.Resources.resources
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.GenerateResource.cache
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.csproj.CoreCompileInputs.cache
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.exe
+C:\Work\School\CG C#\MatrixTransformations\obj\Debug\MatrixTransformations.pdb
