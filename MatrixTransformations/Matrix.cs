@@ -94,15 +94,28 @@ namespace MatrixTransformations
                        0, s, 0,
                        0, 0, s);
 
-        public static Matrix RotateMatrix(float deg)
+        public static Matrix RotateMatrixZ(float theta)
         {
-            float rad = deg * ((float)Math.PI / 180);
+            float rad = theta * ((float)Math.PI / 180);
 
             Matrix res = Identity();
             res.mat[0, 0] = (float)Math.Cos(rad);
             res.mat[0, 1] = (float)-Math.Sin(rad);
             res.mat[1, 0] = (float)Math.Sin(rad);
             res.mat[1, 1] = (float)Math.Cos(rad);
+
+            return res;
+        }
+
+        public static Matrix RotateMatrixX(float theta)
+        {
+            float rad = theta * ((float)Math.PI / 180);
+
+            Matrix res = Identity();
+            res.mat[1, 1] = (float)Math.Cos(rad);
+            res.mat[1, 2] = (float)-Math.Sin(rad);
+            res.mat[2, 1] = (float)Math.Sin(rad);
+            res.mat[2, 2] = (float)Math.Cos(rad);
 
             return res;
         }
@@ -140,29 +153,29 @@ namespace MatrixTransformations
 
         public override string ToString()
         {
-            string s = "";
+            StringBuilder s = new StringBuilder();
             for (int r = 0; r < mat.GetLength(0); r++)
             {
                 if (r == 0)
-                    s += "/";
+                    s.Append("/");
                 else if (r == mat.GetLength(0) - 1)
-                    s += "\\";
+                    s.Append("\\");
                 else
-                    s += "|";
+                    s.Append("|");
 
                 for (int c = 0; c < mat.GetLength(1); c++)
-                    s += mat[r, c] + ", ";
+                    s.Append(mat[r, c] + ", ");
 
                 if (r == 0)
-                    s += "\\";
+                    s.Append("\\");
                 else if (r == mat.GetLength(0) - 1)
-                    s += "/";
+                    s.Append("/");
                 else
-                    s += "|";
-                s += "\n";
+                    s.Append("|");
+                s.Append("\n");
             }
 
-            return s;
+            return s.ToString();
         }
     }
 }

@@ -31,10 +31,10 @@ namespace MatrixTransformations
 
         public override string ToString()
         {
-            return "/" + x + "\\\n" +
-                "|" + y + "|\n" +
-                "|" + z + "|\n" +
-                "\\" + w + "/\n";
+            return $"/{x}\\\n" +
+                   $"|{y}|\n" +
+                   $"|{z}|\n" +
+                  $"\\{w}/\n";
         }
     }
 }

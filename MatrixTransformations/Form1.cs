@@ -32,6 +32,7 @@ namespace MatrixTransformations
             // Define axes
             x_axis = new AxisX(200);
             y_axis = new AxisY(200);
+            z_axis = new AxisZ();
 
             // Create objects
             square = new Square(Color.Purple, 100);
@@ -57,7 +58,7 @@ namespace MatrixTransformations
 
             orangeSquare.Draw(e.Graphics, ViewportTransformation(
                 Transformation(orangeSquare.vertexbuffer,
-                Matrix.RotateMatrix(20))));
+                Matrix.RotateMatrixZ(20))));
 
             darkBlueSquare.Draw(e.Graphics, ViewportTransformation(
                 Transformation(darkBlueSquare.vertexbuffer,
