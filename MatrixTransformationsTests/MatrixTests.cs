@@ -500,8 +500,7 @@ namespace MatrixTransformationsTests
 
             Assert.That(matrix.ToString(),
                 Does.Match(@"(\/((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\\\n" +
-                           @"\|((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\|\n" +
-                           @"\|((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\|\n" +
+                           @"(\|((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\|\n){2}" +
                            @"\\((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\/)"));
         }
     }

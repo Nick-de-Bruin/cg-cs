@@ -110,8 +110,7 @@ namespace MatrixTransformationsTests
 
             Assert.That(result.ToString(), 
                 Does.Match(@"(\/(\d+\.\d+|\d+)\\\n" + 
-                           @"\|(\d+\.\d+|\d+)\|\n" + 
-                           @"\|(\d+\.\d+|\d+)\|\n" + 
+                           @"(\|(\d+\.\d+|\d+)\|\n){2}" + 
                            @"\\(\d+\.\d+|\d+)\/)"));
         }
     }
