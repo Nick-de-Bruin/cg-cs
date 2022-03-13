@@ -131,10 +131,15 @@ namespace MatrixTransformations
 
         public static Matrix InverseMatrix(float phi, float theta, float distance)
         {
+            float st = (float)Math.Sin(theta);
+            float ct = (float)Math.Cos(theta);
+            float sp = (float)Math.Sin(phi);
+            float cp = (float)Math.Cos(phi);
+
             Matrix m = new Matrix(
-                (float)-Math.Sin(theta), (float)Math.Cos(theta), 0,
-                (float)-(Math.Cos(theta) * Math.Cos(phi)), (float)-(Math.Cos(phi) * Math.Sin(theta)), (float)Math.Sin(phi),
-                (float)(Math.Cos(theta) * Math.Sin(phi)), (float)(Math.Sin(theta) * Math.Sin(phi)), (float)Math.Cos(phi)
+                -st,        ct,         0,
+                -(ct * cp), -(cp * st), sp,
+                (ct * sp),  (st * sp),  cp
             );
 
             m.mat[2, 3] = -distance;
@@ -149,7 +154,6 @@ namespace MatrixTransformations
                               0, p, 0,
                               0, 0, 1);
         }
-            
 
         public override string ToString()
         {
@@ -164,7 +168,12 @@ namespace MatrixTransformations
                     s.Append("|");
 
                 for (int c = 0; c < mat.GetLength(1); c++)
-                    s.Append(mat[r, c] + ", ");
+                {
+                    if (c != mat.GetLength(1) - 1)
+                        s.Append(mat[r, c] + ", ");
+                    else
+                        s.Append(mat[r, c]);
+                }
 
                 if (r == 0)
                     s.Append("\\");
