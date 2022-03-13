@@ -5,7 +5,7 @@ namespace MatrixTransformations
 {
     public class Matrix
     {
-        private readonly float[,] mat = new float[4, 4];
+        public readonly float[,] mat = new float[4, 4];
 
         public Matrix() => 
             mat[mat.GetLength(0) - 1, mat.GetLength(1) - 1] = 1f;
@@ -56,8 +56,8 @@ namespace MatrixTransformations
         {
             Matrix m = new Matrix();
 
-            for (int r = 0; r < m1.mat.GetLength(0); r++)
-                for (int c = 0; c < m1.mat.GetLength(1); c++)
+            for (int r = 0; r < m1.mat.GetLength(0) - 1; r++)
+                for (int c = 0; c < m1.mat.GetLength(1) - 1; c++)
                     m.mat[r, c] = m1.mat[r, c] * f;
 
             return m;

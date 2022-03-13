@@ -10,12 +10,14 @@ namespace MatrixTransformations
         // Axes
         private readonly AxisX x_axis;
         private readonly AxisY y_axis;
+        private readonly AxisZ z_axis;
 
         // Objects
-        private readonly Square square;
-        private readonly Square orangeSquare;
-        private readonly Square cyanSquare;
-        private readonly Square darkBlueSquare;
+        private readonly Cube cube;
+        // private readonly Square square;
+        // private readonly Square orangeSquare;
+        // private readonly Square cyanSquare;
+        // private readonly Square darkBlueSquare;
 
         // Window dimensions
         const int WIDTH = 800;
@@ -32,13 +34,14 @@ namespace MatrixTransformations
             // Define axes
             x_axis = new AxisX(200);
             y_axis = new AxisY(200);
-            z_axis = new AxisZ();
+            z_axis = new AxisZ(200);
 
             // Create objects
-            square = new Square(Color.Purple, 100);
-            cyanSquare = new Square(Color.Cyan, 100);
-            orangeSquare = new Square(Color.Orange, 100);
-            darkBlueSquare = new Square(Color.DarkBlue, 100);
+            cube = new Cube(Color.Blue);
+            // square = new Square(Color.Purple, 100);
+            // cyanSquare = new Square(Color.Cyan, 100);
+            // orangeSquare = new Square(Color.Orange, 100);
+            // darkBlueSquare = new Square(Color.DarkBlue, 100);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -48,21 +51,28 @@ namespace MatrixTransformations
             // Draw axes
             x_axis.Draw(e.Graphics, ViewportTransformation(x_axis.vertexbuffer));
             y_axis.Draw(e.Graphics, ViewportTransformation(y_axis.vertexbuffer));
+            z_axis.Draw(e.Graphics, ViewportTransformation(z_axis.vertexbuffer));
+
+            // Draw cube
+            cube.Draw(e.Graphics, ViewportTransformation(
+                Transformation(cube.vertexbuffer,
+                Matrix.ScaleMatrix(100f))
+            ));
 
             // Draw square
-            square.Draw(e.Graphics, ViewportTransformation(square.vertexbuffer));
+            // square.Draw(e.Graphics, ViewportTransformation(square.vertexbuffer));
 
-            cyanSquare.Draw(e.Graphics, ViewportTransformation(
-                Transformation(cyanSquare.vertexbuffer, 
-                Matrix.ScaleMatrix(1.5f))));
+            // cyanSquare.Draw(e.Graphics, ViewportTransformation(
+            //     Transformation(cyanSquare.vertexbuffer, 
+            //     Matrix.ScaleMatrix(1.5f))));
 
-            orangeSquare.Draw(e.Graphics, ViewportTransformation(
-                Transformation(orangeSquare.vertexbuffer,
-                Matrix.RotateMatrixZ(20))));
+            // orangeSquare.Draw(e.Graphics, ViewportTransformation(
+            //     Transformation(orangeSquare.vertexbuffer,
+            //     Matrix.RotateMatrixZ(20))));
 
-            darkBlueSquare.Draw(e.Graphics, ViewportTransformation(
-                Transformation(darkBlueSquare.vertexbuffer,
-                Matrix.TranslateMatrix(new Vector(75, -25, 0)))));
+            // darkBlueSquare.Draw(e.Graphics, ViewportTransformation(
+            //     Transformation(darkBlueSquare.vertexbuffer,
+            //     Matrix.TranslateMatrix(new Vector(75, -25, 0)))));
         }
 
         public static List<Vector> Transformation(List<Vector> vb, Matrix matrix)
@@ -78,11 +88,21 @@ namespace MatrixTransformations
         public static List<Vector> ViewportTransformation(List<Vector> vb)
         {
             List<Vector> result = new List<Vector>();
-            float delta_x = WIDTH / 2;
-            float delta_y = HEIGHT / 2;
+            float delta_x = WIDTH / 2f;
+            float delta_y = HEIGHT / 2f;
 
             foreach (Vector v in vb)
-                result.Add(new Vector(v.x + delta_x, -v.y + delta_y, 0));
+            {
+                Vector vec = Matrix.InverseMatrix(10f, 10f, 10f) *
+                    (Matrix.ProjectionMatrix(800f, 1000f) *
+                    new Vector(v.x, v.y, v.z));
+
+                result.Add(
+                    Matrix.TranslateMatrix(
+                        new Vector(delta_x, delta_y, 0)
+                    ) * vec);
+            }
+                
 
             return result;
         }
