@@ -20,11 +20,29 @@ namespace MatrixTransformations
             mat[2, 0] = m31; mat[2, 1] = m32; mat[2, 2] = m33;
         }
 
-        public Matrix(Vector vec) : 
-            this(vec.x, 0, 0,
-                 vec.y, 0, 0,
-                 vec.z, 0, 0) => 
-            mat[mat.GetLength(1) - 1, 0] = vec.w; 
+        private Matrix(float m11, float m12, float m13, float m14,
+                       float m21, float m22, float m23, float m24,
+                       float m31, float m32, float m33, float m34,
+                       float m41, float m42, float m43, float m44)
+            : this (m11, m12, m13,
+                    m21, m22, m23,
+                    m31, m32, m33)
+        {
+            mat[0, 3] = m14;
+            mat[1, 3] = m24;
+            mat[2, 3] = m34;
+
+            mat[3, 0] = m41;
+            mat[3, 1] = m42;
+            mat[3, 2] = m43;
+            mat[3, 3] = m44;
+        }
+
+        public Matrix(Vector vec) :
+            this(vec.x, 0, 0, 0,
+                 vec.y, 0, 0, 0,
+                 vec.z, 0, 0, 0,
+                 vec.w, 0, 0, 1) { }
 
         public Vector ToVector() => 
             new Vector(mat[0, 0], mat[1, 0], mat[2, 0]);
@@ -90,44 +108,37 @@ namespace MatrixTransformations
                        0, 0, 1);
 
         public static Matrix ScaleMatrix(float s) =>
-            new Matrix(s, 0, 0, 
+            new Matrix(s, 0, 0,
                        0, s, 0,
                        0, 0, s);
 
         public static Matrix RotateMatrixZ(float theta)
         {
             float rad = theta * ((float)Math.PI / 180);
+            float cr = (float)Math.Cos(rad);
+            float sr = (float)-Math.Sin(rad);
 
-            Matrix res = Identity();
-            res.mat[0, 0] = (float)Math.Cos(rad);
-            res.mat[0, 1] = (float)-Math.Sin(rad);
-            res.mat[1, 0] = (float)Math.Sin(rad);
-            res.mat[1, 1] = (float)Math.Cos(rad);
-
-            return res;
+            return new Matrix (cr, -sr, 0,
+                               sr, cr,  0,
+                               0,  0,   1);
         }
 
         public static Matrix RotateMatrixX(float theta)
         {
             float rad = theta * ((float)Math.PI / 180);
+            float cr = (float)Math.Cos(rad);
+            float sr = (float)-Math.Sin(rad);
 
-            Matrix res = Identity();
-            res.mat[1, 1] = (float)Math.Cos(rad);
-            res.mat[1, 2] = (float)-Math.Sin(rad);
-            res.mat[2, 1] = (float)Math.Sin(rad);
-            res.mat[2, 2] = (float)Math.Cos(rad);
-
-            return res;
+            return new Matrix(1, 0,  0,
+                              0, cr, -sr,
+                              0, sr, cr);
         }
 
         public static Matrix TranslateMatrix(Vector vec)
-        {
-            Matrix m = Identity();
-            m.mat[0, m.mat.GetLength(1) - 1] = vec.x;
-            m.mat[1, m.mat.GetLength(1) - 1] = vec.y;
-            m.mat[2, m.mat.GetLength(1) - 1] = vec.z;
-            return m;
-        }
+            => new Matrix(1, 0, 0, vec.x,
+                          0, 1, 0, vec.y,
+                          0, 0, 1, vec.z,
+                          0, 0, 0, 1);
 
         public static Matrix InverseMatrix(float phi, float theta, float distance)
         {
@@ -139,15 +150,12 @@ namespace MatrixTransformations
             float sp = (float)Math.Sin(p);
             float cp = (float)Math.Cos(p);
 
-            Matrix m = new Matrix(
-                -st,        ct,         0,
-                -(ct * cp), -(cp * st), sp,
-                (ct * sp),  (st * sp),  cp
+            return new Matrix(
+                -st,        ct,         0,  0,
+                -(ct * cp), -(cp * st), sp, 0,
+                (ct * sp),  (st * sp),  cp, -distance,
+                0,          0,          0,  1
             );
-
-            m.mat[2, 3] = -distance;
-
-            return m;
         }
 
         public static Matrix ProjectionMatrix(float distance, float vecz)
