@@ -131,10 +131,13 @@ namespace MatrixTransformations
 
         public static Matrix InverseMatrix(float phi, float theta, float distance)
         {
-            float st = (float)Math.Sin(theta);
-            float ct = (float)Math.Cos(theta);
-            float sp = (float)Math.Sin(phi);
-            float cp = (float)Math.Cos(phi);
+            float t = theta * ((float)Math.PI / 180);
+            float p = phi * ((float)Math.PI / 180);
+
+            float st = (float)Math.Sin(t);
+            float ct = (float)Math.Cos(t);
+            float sp = (float)Math.Sin(p);
+            float cp = (float)Math.Cos(p);
 
             Matrix m = new Matrix(
                 -st,        ct,         0,

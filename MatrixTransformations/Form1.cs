@@ -32,9 +32,9 @@ namespace MatrixTransformations
             DoubleBuffered = true;
 
             // Define axes
-            x_axis = new AxisX(200);
-            y_axis = new AxisY(200);
-            z_axis = new AxisZ(200);
+            x_axis = new AxisX(2);
+            y_axis = new AxisY(2);
+            z_axis = new AxisZ(2);
 
             // Create objects
             cube = new Cube(Color.Blue);
@@ -54,10 +54,7 @@ namespace MatrixTransformations
             z_axis.Draw(e.Graphics, ViewportTransformation(z_axis.vertexbuffer));
 
             // Draw cube
-            cube.Draw(e.Graphics, ViewportTransformation(
-                Transformation(cube.vertexbuffer,
-                Matrix.ScaleMatrix(100f))
-            ));
+            cube.Draw(e.Graphics, ViewportTransformation(cube.vertexbuffer));
 
             // Draw square
             // square.Draw(e.Graphics, ViewportTransformation(square.vertexbuffer));
@@ -88,21 +85,14 @@ namespace MatrixTransformations
         public static List<Vector> ViewportTransformation(List<Vector> vb)
         {
             List<Vector> result = new List<Vector>();
-            float delta_x = WIDTH / 2f;
-            float delta_y = HEIGHT / 2f;
 
             foreach (Vector v in vb)
             {
-                Vector vec = Matrix.InverseMatrix(10f, 10f, 10f) *
-                    (Matrix.ProjectionMatrix(800f, 1000f) *
-                    new Vector(v.x, v.y, v.z));
-
-                result.Add(
-                    Matrix.TranslateMatrix(
-                        new Vector(delta_x, delta_y, 0)
-                    ) * vec);
+                Vector inverse = Matrix.InverseMatrix(-10f, -100f, 10f) * v;
+                Vector projection = Matrix.ProjectionMatrix(800f, inverse.z) * inverse;
+                // result.Add(Matrix.TranslateMatrix(new Vector(delta_x, delta_y, 0)) * projection);
+                result.Add(new Vector(projection.x + WIDTH / 2, -projection.y + HEIGHT / 2, 0));
             }
-                
 
             return result;
         }

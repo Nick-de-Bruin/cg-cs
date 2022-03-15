@@ -109,9 +109,9 @@ namespace MatrixTransformationsTests
             Vector result = new Vector(x, y, z);
 
             Assert.That(result.ToString(), 
-                Does.Match(@"(\/(\d+\.\d+|\d+)\\\n" + 
-                           @"(\|(\d+\.\d+|\d+)\|\n){2}" + 
-                           @"\\(\d+\.\d+|\d+)\/)"));
+                Does.Match(@"(\/(\d+(\.|,)\d+|\d+)\\\n" +
+                           @"(\|(\d+(\.|,)\d+|\d+)\|\n){2}" +
+                           @"\\(\d+(\.|,)\d+|\d+)\/)"));
         }
     }
 }
