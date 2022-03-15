@@ -116,7 +116,7 @@ namespace MatrixTransformations
         {
             float rad = theta * ((float)Math.PI / 180);
             float cr = (float)Math.Cos(rad);
-            float sr = (float)-Math.Sin(rad);
+            float sr = (float)Math.Sin(rad);
 
             return new Matrix (cr, -sr, 0,
                                sr, cr,  0,
@@ -127,7 +127,7 @@ namespace MatrixTransformations
         {
             float rad = theta * ((float)Math.PI / 180);
             float cr = (float)Math.Cos(rad);
-            float sr = (float)-Math.Sin(rad);
+            float sr = (float)Math.Sin(rad);
 
             return new Matrix(1, 0,  0,
                               0, cr, -sr,
