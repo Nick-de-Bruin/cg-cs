@@ -5,6 +5,26 @@ namespace MatrixTransformations
 {
     public class Cube
     {
+        //Attributes
+        public float scale = 100f; //1f
+        public float d = 10f; //800f
+        public float r = 800f; //10f
+        public float theta = 10f; //-100f
+        public float phi = 10f; //-10f
+
+        //Rotations and translations
+        public int rotateX = 0;
+        public int rotateY = 0;
+        public int rotateZ = 0;
+
+        public int translateX = 0;
+        public int translateY = 0;
+        public int translateZ = 0;
+
+        //Matrices
+        public Matrix rotationMatrix = Matrix.Identity();
+        public Matrix translationMatrix = Matrix.Identity();
+        public Matrix scaleMatrix = Matrix.Identity();
 
         //          7----------4
         //         /|         /|
@@ -70,5 +90,30 @@ namespace MatrixTransformations
                 g.DrawString(i.ToString(), font, brush, p);
             }
         }
-    }   
+
+        public void Reset()
+        {
+            //Attributes
+            scale = 100f; //1f
+            d = 10f; //800f
+            r = 800f; //10f
+            theta = 10f; //-100f
+            phi = 10f; //-10f
+
+            //Rotations and translations
+            rotateX = 0;
+            rotateY = 0;
+            rotateZ = 0;
+
+            translateX = 0;
+            translateY = 0;
+            translateZ = 0;
+
+            //Matrices
+            rotationMatrix = Matrix.Identity();
+            translationMatrix = Matrix.Identity();
+            scaleMatrix = Matrix.Identity();
+        }
+
+    } 
 }

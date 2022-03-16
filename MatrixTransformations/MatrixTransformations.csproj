@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation.cs" />
     <Compile Include="AxisX.cs" />
     <Compile Include="AxisY.cs" />
     <Compile Include="AxisZ.cs" />

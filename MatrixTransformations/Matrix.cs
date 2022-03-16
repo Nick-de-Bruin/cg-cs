@@ -120,6 +120,19 @@ namespace MatrixTransformations
             return res;
         }
 
+        public static Matrix RotateMatrixY(float theta)
+        {
+            float rad = theta * ((float)Math.PI / 180);
+
+            Matrix res = Identity();
+            res.mat[0, 0] = (float)Math.Cos(rad);
+            res.mat[0, 2] = (float)-Math.Sin(rad);
+            res.mat[2, 0] = (float)Math.Sin(rad);
+            res.mat[2, 2] = (float)Math.Cos(rad);
+
+            return res;
+        }
+
         public static Matrix TranslateMatrix(Vector vec)
         {
             Matrix m = Identity();
