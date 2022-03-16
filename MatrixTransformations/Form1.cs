@@ -31,9 +31,9 @@ namespace MatrixTransformations
             DoubleBuffered = true;
 
             // Define axes
-            x_axis = new AxisX(200);
-            y_axis = new AxisY(200);
-            z_axis = new AxisZ(200);
+            x_axis = new AxisX(2);
+            y_axis = new AxisY(2);
+            z_axis = new AxisZ(2);
 
             // Create object
             cube = new Cube(Color.Blue);
@@ -89,21 +89,13 @@ namespace MatrixTransformations
         public List<Vector> ViewportTransformation(List<Vector> vb)
         {
             List<Vector> result = new List<Vector>();
-            float delta_x = WIDTH / 2f;
-            float delta_y = HEIGHT / 2f;
 
             foreach (Vector v in vb)
             {
-                Vector vec = Matrix.InverseMatrix(cube.phi, cube.theta, cube.d) *
-                    (Matrix.ProjectionMatrix(cube.r, 1000f) *
-                    new Vector(v.x, v.y, v.z));
-
-                result.Add(
-                    Matrix.TranslateMatrix(
-                        new Vector(delta_x, delta_y, 0)
-                    ) * vec);
+                Vector inverse = Matrix.InverseMatrix(-10f, -100f, 10f) * v;
+                Vector projection = Matrix.ProjectionMatrix(800f, inverse.z) * inverse;
+                result.Add(new Vector(projection.x + WIDTH / 2, -projection.y + HEIGHT / 2, 0));
             }
-                
 
             return result;
         }

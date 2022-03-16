@@ -426,10 +426,13 @@ namespace MatrixTransformationsTests
         {
             Matrix matrix = Matrix.InverseMatrix(phi, theta, distance);
 
-            float st = (float)Math.Sin(theta);
-            float ct = (float)Math.Cos(theta);
-            float sp = (float)Math.Sin(phi);
-            float cp = (float)Math.Cos(phi);
+            float t = theta * ((float)Math.PI / 180);
+            float p = phi * ((float)Math.PI / 180);
+
+            float st = (float)Math.Sin(t);
+            float ct = (float)Math.Cos(t);
+            float sp = (float)Math.Sin(p);
+            float cp = (float)Math.Cos(p);
 
             // -st,    ct,     0,  0
             // -ct*cp, -cp*st, sp, 0
@@ -499,9 +502,9 @@ namespace MatrixTransformationsTests
                                        324.4f, 323.434f, 57);
 
             Assert.That(matrix.ToString(),
-                Does.Match(@"(\/((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\\\n" +
-                           @"(\|((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\|\n){2}" +
-                           @"\\((\d+\.\d+|\d+)\, ){3}(\d+\.\d+|\d+)\/)"));
+                Does.Match(@"(\/((\d+(\.|,)\d+|\d+)\, ){3}(\d+(\.|,)\d+|\d+)\\\n" +
+                           @"(\|((\d+(\.|,)\d+|\d+)\, ){3}(\d+(\.|,)\d+|\d+)\|\n){2}" +
+                           @"\\((\d+(\.|,)\d+|\d+)\, ){3}(\d+(\.|,)\d+|\d+)\/)"));
         }
     }
 }
