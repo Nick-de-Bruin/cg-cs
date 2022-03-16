@@ -3,13 +3,34 @@ using System.Text;
 
 namespace MatrixTransformations
 {
+    /// <summary>
+    /// Represents a 4x4 matrix
+    /// </summary>
     public class Matrix
     {
+        /// <summary>
+        /// A two-dimensional 4x4 float array
+        /// </summary>
         public readonly float[,] mat = new float[4, 4];
 
+        /// <summary>
+        /// Creates an empty array
+        /// </summary>
         public Matrix() => 
             mat[mat.GetLength(0) - 1, mat.GetLength(1) - 1] = 1f;
 
+        /// <summary>
+        /// Creates a matrix with the given variables
+        /// </summary>
+        /// <param name="m11">Matrix position 0, 0</param>
+        /// <param name="m12">Matrix position 0, 1</param>
+        /// <param name="m13">Matrix position 0, 2</param>
+        /// <param name="m21">Matrix position 1, 0</param>
+        /// <param name="m22">Matrix position 1, 1</param>
+        /// <param name="m23">Matrix position 1, 2</param>
+        /// <param name="m31">Matrix position 2, 0</param>
+        /// <param name="m32">Matrix position 2, 1</param>
+        /// <param name="m33">Matrix position 2, 2</param>
         public Matrix(float m11, float m12, float m13,
                       float m21, float m22, float m23,
                       float m31, float m32, float m33) 
@@ -38,12 +59,20 @@ namespace MatrixTransformations
             mat[3, 3] = m44;
         }
 
+        /// <summary>
+        /// Creates a matrix representation of a vector at left hand side of the matrix
+        /// </summary>
+        /// <param name="vec">The vector to be represented as a matrix</param>
         public Matrix(Vector vec) :
             this(vec.x, 0, 0, 0,
                  vec.y, 0, 0, 0,
                  vec.z, 0, 0, 0,
                  vec.w, 0, 0, 1) { }
 
+        /// <summary>
+        /// Converts the left hand side of a matrix to a vector
+        /// </summary>
+        /// <returns>A vector from a matrix</returns>
         public Vector ToVector() => 
             new Vector(mat[0, 0], mat[1, 0], mat[2, 0]);
 
@@ -102,16 +131,30 @@ namespace MatrixTransformations
         public static Vector operator *(Matrix m1, Vector v) =>
             (m1 * new Matrix(v)).ToVector();
 
+        /// <summary>
+        /// Creates an identity matrix
+        /// </summary>
+        /// <returns>An identity matrix</returns>
         public static Matrix Identity() => 
             new Matrix(1, 0, 0,
                        0, 1, 0,
                        0, 0, 1);
 
+        /// <summary>
+        /// Creates a scale matrix
+        /// </summary>
+        /// <param name="s">The scale the matrix should hold</param>
+        /// <returns>A scale matrix with the given scale</returns>
         public static Matrix ScaleMatrix(float s) =>
             new Matrix(s, 0, 0,
                        0, s, 0,
                        0, 0, s);
 
+        /// <summary>
+        /// Creates a rotation matrix over the z axis
+        /// </summary>
+        /// <param name="theta">The theta the matrix should represent</param>
+        /// <returns>A rotation matrix given the theta</returns>
         public static Matrix RotateMatrixZ(float theta)
         {
             float rad = theta * ((float)Math.PI / 180);
@@ -123,6 +166,11 @@ namespace MatrixTransformations
                                0,  0,   1);
         }
 
+        /// <summary>
+        /// Creates a rotation matrix over the z axis
+        /// </summary>
+        /// <param name="theta">The theta the matrix should represent</param>
+        /// <returns>A rotation matrix given the theta</returns>
         public static Matrix RotateMatrixX(float theta)
         {
             float rad = theta * ((float)Math.PI / 180);
@@ -134,12 +182,24 @@ namespace MatrixTransformations
                               0, sr, cr);
         }
 
+        /// <summary>
+        /// Creates a translation matrix given a vector
+        /// </summary>
+        /// <param name="vec">The vector to translate over</param>
+        /// <returns>A translation matrix given the vector</returns>
         public static Matrix TranslateMatrix(Vector vec)
             => new Matrix(1, 0, 0, vec.x,
                           0, 1, 0, vec.y,
                           0, 0, 1, vec.z,
                           0, 0, 0, 1);
 
+        /// <summary>
+        /// Creates an invese matrix given a phi, theta, and distance (r)
+        /// </summary>
+        /// <param name="phi">Represents phi in radians</param>
+        /// <param name="theta">Represents the theta in radians</param>
+        /// <param name="distance">Represents the distance (r)</param>
+        /// <returns>An inverse matrix given phi, theta, and the distance (r)</returns>
         public static Matrix InverseMatrix(float phi, float theta, float distance)
         {
             float t = theta * ((float)Math.PI / 180);
@@ -158,6 +218,12 @@ namespace MatrixTransformations
             );
         }
 
+        /// <summary>
+        /// Creates a projection matrix given a distance and z vector
+        /// </summary>
+        /// <param name="distance">Represents the distance (d)</param>
+        /// <param name="vecz">Represents the z vector</param>
+        /// <returns>A matrix for projection transformation</returns>
         public static Matrix ProjectionMatrix(float distance, float vecz)
         {
             float p = -(distance / vecz);
@@ -165,6 +231,15 @@ namespace MatrixTransformations
                               0, p, 0,
                               0, 0, 1);
         }
+
+        /// <summary>
+        /// Creates a projection matrix given a distance and a vector
+        /// </summary>
+        /// <param name="distance">Represents the distance (d)</param>
+        /// <param name="vec">Represents the vector of which the z will be used</param>
+        /// <returns>A matrix for projection transformation</returns>
+        public static Matrix ProjectionMatrix(float distance, Vector vec) =>
+            ProjectionMatrix(distance, vec.z);
 
         public override string ToString()
         {

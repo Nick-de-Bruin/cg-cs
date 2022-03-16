@@ -14,10 +14,6 @@ namespace MatrixTransformations
 
         // Objects
         private readonly Cube cube;
-        // private readonly Square square;
-        // private readonly Square orangeSquare;
-        // private readonly Square cyanSquare;
-        // private readonly Square darkBlueSquare;
 
         // Window dimensions
         const int WIDTH = 800;
@@ -38,10 +34,6 @@ namespace MatrixTransformations
 
             // Create objects
             cube = new Cube(Color.Blue);
-            // square = new Square(Color.Purple, 100);
-            // cyanSquare = new Square(Color.Cyan, 100);
-            // orangeSquare = new Square(Color.Orange, 100);
-            // darkBlueSquare = new Square(Color.DarkBlue, 100);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -55,21 +47,6 @@ namespace MatrixTransformations
 
             // Draw cube
             cube.Draw(e.Graphics, ViewportTransformation(cube.vertexbuffer));
-
-            // Draw square
-            // square.Draw(e.Graphics, ViewportTransformation(square.vertexbuffer));
-
-            // cyanSquare.Draw(e.Graphics, ViewportTransformation(
-            //     Transformation(cyanSquare.vertexbuffer, 
-            //     Matrix.ScaleMatrix(1.5f))));
-
-            // orangeSquare.Draw(e.Graphics, ViewportTransformation(
-            //     Transformation(orangeSquare.vertexbuffer,
-            //     Matrix.RotateMatrixZ(20))));
-
-            // darkBlueSquare.Draw(e.Graphics, ViewportTransformation(
-            //     Transformation(darkBlueSquare.vertexbuffer,
-            //     Matrix.TranslateMatrix(new Vector(75, -25, 0)))));
         }
 
         public static List<Vector> Transformation(List<Vector> vb, Matrix matrix)
@@ -90,7 +67,6 @@ namespace MatrixTransformations
             {
                 Vector inverse = Matrix.InverseMatrix(-10f, -100f, 10f) * v;
                 Vector projection = Matrix.ProjectionMatrix(800f, inverse.z) * inverse;
-                // result.Add(Matrix.TranslateMatrix(new Vector(delta_x, delta_y, 0)) * projection);
                 result.Add(new Vector(projection.x + WIDTH / 2, -projection.y + HEIGHT / 2, 0));
             }
 
