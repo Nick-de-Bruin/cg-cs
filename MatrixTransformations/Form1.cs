@@ -13,7 +13,7 @@ namespace MatrixTransformations
         private readonly AxisZ z_axis;
 
         // Object
-        private readonly Cube cube;
+        private readonly Shape shape;
 
         // Window dimensions
         const int WIDTH = 800;
@@ -36,10 +36,10 @@ namespace MatrixTransformations
             z_axis = new AxisZ(2);
 
             // Create object
-            cube = new Cube(Color.Blue);
+            shape = new Cube(Color.Blue);
 
             // Create animator
-            animation = new Animation(cube);
+            animation = new Animation(shape);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -47,19 +47,20 @@ namespace MatrixTransformations
             base.OnPaint(e);
             //Write keypress events
             e.Graphics.DrawString("KEYPRESS EVENTS \n\n" +
-                "Scale             " + cube.scale + "        s/S\n" +
-                "RotateX          " + cube.rotateX +  "           x/X\n" +
-                "RotateY          " + cube.rotateY + "           y/Y\n" +
-                "RotateZ          " + cube.rotateZ + "           z/Z\n" +
-                "TranslateX       " + cube.translateX + "          Left/Right\n" +
-                "TranslateY       " + cube.translateY + "          Up/Down\n" +
-                "TranslateZ       " + cube.translateZ +"          PgUp/PgDn\n\n" +
+                "Scale             " + shape.scale + "           s/S\n" +
+                "RotateX          " + shape.rotateX +  "           x/X\n" +
+                "RotateY          " + shape.rotateY + "           y/Y\n" +
+                "RotateZ          " + shape.rotateZ + "           z/Z\n" +
+                "TranslateX       " + shape.translateX + "          Left/Right\n" +
+                "TranslateY       " + shape.translateY + "          Up/Down\n" +
+                "TranslateZ       " + shape.translateZ +"          PgUp/PgDn\n\n" +
                 "Reset                          C\n" +
-                "Animate                       A\n\n" +
-                "Phi                " + cube.phi + "          p/P\n" +
-                "Theta             " + cube.theta + "          t/T\n" +
-                "d                   " + cube.d + "          d/D\n" +
-                "r                    " + cube.r +"        r/R\n\n" +
+                "Animate                       A\n" +
+                "Pause/Play                  Space\n\n" +
+                "Phi                " + shape.phi + "          p/P\n" +
+                "Theta             " + shape.theta + "        t/T\n" +
+                "d                   " + shape.d + "         d/D\n" +
+                "r                    " + shape.r +"          r/R\n\n" +
                 "Phase             " + animation.phase, new Font("Arial", 10), Brushes.Black, 0, 0); 
 
 
@@ -68,12 +69,12 @@ namespace MatrixTransformations
             y_axis.Draw(e.Graphics, ViewportTransformation(y_axis.vertexbuffer));
             z_axis.Draw(e.Graphics, ViewportTransformation(z_axis.vertexbuffer));
 
-            cube.scaleMatrix = Matrix.ScaleMatrix(cube.scale);
+            shape.scaleMatrix = Matrix.ScaleMatrix(shape.scale);
 
             //Make sure transformations are done in the correct order
-            Matrix transformation = cube.translationMatrix * cube.rotationMatrix * cube.scaleMatrix;
+            Matrix transformation = shape.translationMatrix * shape.rotationMatrix * shape.scaleMatrix;
             // Draw cube 
-            cube.Draw(e.Graphics, ViewportTransformation(Transformation(cube.vertexbuffer, transformation)));
+            shape.Draw(e.Graphics, ViewportTransformation(Transformation(shape.vertexbuffer, transformation)));
         }
 
         public static List<Vector> Transformation(List<Vector> vb, Matrix matrix)
@@ -92,8 +93,8 @@ namespace MatrixTransformations
 
             foreach (Vector v in vb)
             {
-                Vector inverse = Matrix.InverseMatrix(-10f, -100f, 10f) * v;
-                Vector projection = Matrix.ProjectionMatrix(800f, inverse.z) * inverse;
+                Vector inverse = Matrix.InverseMatrix(shape.phi, shape.theta, shape.r) * v;
+                Vector projection = Matrix.ProjectionMatrix(shape.d, inverse.z) * inverse;
                 result.Add(new Vector(projection.x + WIDTH / 2, -projection.y + HEIGHT / 2, 0));
             }
 
@@ -108,62 +109,59 @@ namespace MatrixTransformations
                 case Keys.Escape: Application.Exit();
                     break;
                 case Keys.S:
-                    cube.scale += mod; //todo: change to 0.01 when scale = 1 is used. !!Also do this within the animation class!! 
-                    cube.scaleMatrix *= Matrix.ScaleMatrix(cube.scale);
+                    shape.scale += mod * .01f;
+                    shape.scaleMatrix *= Matrix.ScaleMatrix(shape.scale);
                     break;
                 case Keys.X:
-                    cube.rotateX += mod;
-                    cube.rotationMatrix *= Matrix.RotateMatrixX(mod);
+                    shape.rotateX += mod;
+                    shape.rotationMatrix *= Matrix.RotateMatrixX(mod);
                     break;
                 case Keys.Y:
-                    cube.rotateY += mod;
-                    cube.rotationMatrix *= Matrix.RotateMatrixY(mod);
+                    shape.rotateY += mod;
+                    shape.rotationMatrix *= Matrix.RotateMatrixY(mod);
                     break;
                 case Keys.Z:
-                    cube.rotateZ += mod;
-                    cube.rotationMatrix *= Matrix.RotateMatrixZ(mod);
+                    shape.rotateZ += mod;
+                    shape.rotationMatrix *= Matrix.RotateMatrixZ(mod);
                     break;
                 case Keys.Left:
-                    cube.translateX -= 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(-1, 0, 0));
+                    shape.translateX -= 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(-1, 0, 0));
                     break;
                 case Keys.Right:
-                    cube.translateX += 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(1, 0, 0));
+                    shape.translateX += 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(1, 0, 0));
                     break;
                 case Keys.Up:
-                    cube.translateY += 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 1, 0));
+                    shape.translateY += 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 1, 0));
                     break;
                 case Keys.Down:
-                    cube.translateY -= 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, -1, 0));
+                    shape.translateY -= 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, -1, 0));
                     break;
                 case Keys.PageUp:
-                    cube.translateZ += 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 0, 1));
+                    shape.translateZ += 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 0, 1));
                     break;
                 case Keys.PageDown:
-                    cube.translateZ -= 1;
-                    cube.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 0, -1));
+                    shape.translateZ -= 1;
+                    shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 0, -1));
                     break;
-                case Keys.R: cube.r += mod;
+                case Keys.R: shape.r += mod;
                     break;
-                case Keys.D: cube.d += mod;
+                case Keys.D: shape.d += mod;
                     break;
-                case Keys.P: cube.phi += mod;
+                case Keys.P: shape.phi += mod;
                     break;
-                case Keys.T: cube.theta += mod;
+                case Keys.T: shape.theta += mod;
                     break;
-                case Keys.C:
-                    animation.Stop();
-                    cube.Reset();
+                case Keys.C: animation.Stop();
                     break;
-                case Keys.A:
-                    cube.Reset();
-                    animation.Start();
+                case Keys.A: animation.Start();
                     break;
-
+                case Keys.Space: animation.PausePlay();
+                    break;
             }
 
             Invalidate();

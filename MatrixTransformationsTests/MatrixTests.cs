@@ -384,6 +384,43 @@ namespace MatrixTransformationsTests
         [TestCase(1)]
         [TestCase(3.3f)]
         [TestCase(567.32f)]
+        public void RotateMatrixY_GivenFloat_CreatesRotateMatrix(
+            float theta)
+        {
+            Matrix matrix = Matrix.RotateMatrixY(theta);
+
+            float rad = theta * ((float)Math.PI / 180);
+            float radcos = (float)Math.Cos(rad);
+            float radsin = (float)Math.Sin(rad);
+
+            // radcos, 0, radsin, 0
+            // 0,      1, 0,      0
+            // -radsin,0, radcos ,0
+            // 0,      0, 0,      1
+            Assert.AreEqual(radcos, matrix.mat[0, 0]);
+            Assert.AreEqual(0, matrix.mat[0, 1]);
+            Assert.AreEqual(radsin, matrix.mat[0, 2]);
+            Assert.AreEqual(0, matrix.mat[0, 3]);
+
+            Assert.AreEqual(0, matrix.mat[1, 0]);
+            Assert.AreEqual(1, matrix.mat[1, 1]);
+            Assert.AreEqual(0, matrix.mat[1, 2]);
+            Assert.AreEqual(0, matrix.mat[1, 3]);
+
+            Assert.AreEqual(-radsin, matrix.mat[2, 0]);
+            Assert.AreEqual(0, matrix.mat[2, 1]);
+            Assert.AreEqual(radcos, matrix.mat[2, 2]);
+            Assert.AreEqual(0, matrix.mat[2, 3]);
+
+            Assert.AreEqual(0, matrix.mat[3, 0]);
+            Assert.AreEqual(0, matrix.mat[3, 1]);
+            Assert.AreEqual(0, matrix.mat[3, 2]);
+            Assert.AreEqual(1, matrix.mat[3, 3]);
+        }
+
+        [TestCase(1)]
+        [TestCase(3.3f)]
+        [TestCase(567.32f)]
         public void RotateMatrixX_GivenFloat_CreatesRotateMatrix(
             float theta)
         {

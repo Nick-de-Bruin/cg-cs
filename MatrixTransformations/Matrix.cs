@@ -167,7 +167,7 @@ namespace MatrixTransformations
         }
 
         /// <summary>
-        /// Creates a rotation matrix over the z axis
+        /// Creates a rotation matrix over the x axis
         /// </summary>
         /// <param name="theta">The theta the matrix should represent</param>
         /// <returns>A rotation matrix given the theta</returns>
@@ -182,19 +182,29 @@ namespace MatrixTransformations
                               0, sr, cr);
         }
 
+        /// <summary>
+        /// Creates a rotation matrix over the y axis
+        /// </summary>
+        /// <param name="theta">The theta the matrix should represent</param>
+        /// <returns>A rotation matrix given the theta</returns>
         public static Matrix RotateMatrixY(float theta)
         {
             float rad = theta * ((float)Math.PI / 180);
 
             Matrix res = Identity();
             res.mat[0, 0] = (float)Math.Cos(rad);
-            res.mat[0, 2] = (float)-Math.Sin(rad);
-            res.mat[2, 0] = (float)Math.Sin(rad);
+            res.mat[0, 2] = (float)Math.Sin(rad);
+            res.mat[2, 0] = (float)-Math.Sin(rad);
             res.mat[2, 2] = (float)Math.Cos(rad);
 
             return res;
         }
 
+        /// <summary>
+        /// Creates a translation matrix given a vector
+        /// </summary>
+        /// <param name="vec">The vector to translate over</param>
+        /// <returns>A translation matrix given the vector</returns>
         public static Matrix TranslateMatrix(Vector vec)
             => new Matrix(1, 0, 0, vec.x,
                           0, 1, 0, vec.y,
