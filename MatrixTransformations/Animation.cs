@@ -66,13 +66,13 @@ namespace MatrixTransformations
                 case 2:
                     shape.rotateX += 1;
                     shape.theta -= 1;
-                    shape.rotationMatrix *= Matrix.RotateMatrixX(shape.rotateX);
+                    shape.rotationMatrix *= Matrix.RotateMatrixX(1);
                     if(shape.rotateX == 45) phase = 2.5;
                     break;
                 case 2.5:
                     shape.rotateX -= 1;
                     shape.theta -= 1;
-                    shape.rotationMatrix *= Matrix.RotateMatrixX(shape.rotateX);
+                    shape.rotationMatrix *= Matrix.RotateMatrixX(-1);
                     if( shape.rotateX == 0) { phase = 3; }
                     break;
                 //Phase 3: Rotate 45 degrees over Y-axis and back
@@ -80,13 +80,13 @@ namespace MatrixTransformations
                 case 3:
                     shape.rotateY += 1;
                     shape.phi += 1;
-                    shape.rotationMatrix *= Matrix.RotateMatrixX(shape.rotateY);
+                    shape.rotationMatrix *= Matrix.RotateMatrixX(1);
                     if (shape.rotateY == 45) phase = 3.5;
                     break;
                 case 3.5:
                     shape.rotateY -= 1;
                     shape.phi += 1;
-                    shape.rotationMatrix *= Matrix.RotateMatrixX(shape.rotateY);
+                    shape.rotationMatrix *= Matrix.RotateMatrixX(-1);
                     if (shape.rotateY == 0) phase = 4;
                     break;
                 //Phase 4: Increase theta and decrease phi until starting values

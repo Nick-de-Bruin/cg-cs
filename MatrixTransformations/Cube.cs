@@ -15,42 +15,38 @@ namespace MatrixTransformations
         //      |/         |/                  z
         //      2----------1
 
-        public Cube(Color c) : base(c)
-        {
-        }
+        public Cube(Color c) : base(c) { }
 
         private readonly List<Vector> _vertexbuffer = new List<Vector>()
         {
             new Vector(1.0f, 1.0f, 1.0f),     //0
-                    new Vector(1.0f, -1.0f, 1.0f),    //1
-                    new Vector(-1.0f, -1.0f, 1.0f),   //2
-                    new Vector(-1.0f, 1.0f, 1.0f),    //3
+            new Vector(1.0f, -1.0f, 1.0f),    //1
+            new Vector(-1.0f, -1.0f, 1.0f),   //2
+            new Vector(-1.0f, 1.0f, 1.0f),    //3
 
-                    new Vector(1.0f, 1.0f, -1.0f),    //4
-                    new Vector(1.0f, -1.0f, -1.0f),   //5
-                    new Vector(-1.0f, -1.0f, -1.0f),  //6
-                    new Vector(-1.0f, 1.0f, -1.0f),   //7
-
-                    new Vector(1.2f, 1.2f, 1.2f),     //0
-                    new Vector(1.2f, -1.2f, 1.2f),    //1
-                    new Vector(-1.2f, -1.2f, 1.2f),   //2
-                    new Vector(-1.2f, 1.2f, 1.2f),    //3
-
-                    new Vector(1.2f, 1.2f, -1.2f),    //4
-                    new Vector(1.2f, -1.2f, -1.2f),   //5
-                    new Vector(-1.2f, -1.2f, -1.2f),  //6
-                    new Vector(-1.2f, 1.2f, -1.2f)    //7
+            new Vector(1.0f, 1.0f, -1.0f),    //4
+            new Vector(1.0f, -1.0f, -1.0f),   //5
+            new Vector(-1.0f, -1.0f, -1.0f),  //6
+            new Vector(-1.0f, 1.0f, -1.0f),   //7
+            
+            new Vector(1.2f, 1.2f, 1.2f),     //0
+            new Vector(1.2f, -1.2f, 1.2f),    //1
+            new Vector(-1.2f, -1.2f, 1.2f),   //2
+            new Vector(-1.2f, 1.2f, 1.2f),    //3
+            
+            new Vector(1.2f, 1.2f, -1.2f),    //4
+            new Vector(1.2f, -1.2f, -1.2f),   //5
+            new Vector(-1.2f, -1.2f, -1.2f),  //6
+            new Vector(-1.2f, 1.2f, -1.2f)    //7
         };
 
-        public override List<Vector> vertexbuffer
-        {
-            get { return _vertexbuffer; }
-        }
+        public override List<Vector> vertexbuffer => _vertexbuffer;
 
         public override void Draw(Graphics g, List<Vector> vb)
         {
             Pen pen = new Pen(color, 2f);
             Brush brush = new SolidBrush(Color.Black);
+            Font font = new Font("Arial", 12, FontStyle.Bold);
 
             g.DrawLine(pen, vb[0].x, vb[0].y, vb[1].x, vb[1].y);    //0 -> 1
             g.DrawLine(pen, vb[1].x, vb[1].y, vb[2].x, vb[2].y);    //1 -> 2
@@ -67,7 +63,6 @@ namespace MatrixTransformations
             g.DrawLine(pen, vb[2].x, vb[2].y, vb[6].x, vb[6].y);    //2 -> 6
             g.DrawLine(pen, vb[3].x, vb[3].y, vb[7].x, vb[7].y);    //3 -> 7
 
-            Font font = new Font("Arial", 12, FontStyle.Bold);
             for (int i = 0; i < 8; i++)
             {
                 PointF p = new PointF(vb[i + 8].x, vb[i + 8].y);

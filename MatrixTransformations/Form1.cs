@@ -13,14 +13,14 @@ namespace MatrixTransformations
         private readonly AxisZ z_axis;
 
         // Object
-        private readonly Shape shape;
+        private Shape shape;
 
         // Window dimensions
         const int WIDTH = 800;
         const int HEIGHT = 600;
 
         //Animation
-        private readonly Animation animation;
+        private Animation animation;
 
         public Form1()
         {
@@ -53,7 +53,8 @@ namespace MatrixTransformations
                 "RotateZ          " + shape.rotateZ + "           z/Z\n" +
                 "TranslateX       " + shape.translateX + "          Left/Right\n" +
                 "TranslateY       " + shape.translateY + "          Up/Down\n" +
-                "TranslateZ       " + shape.translateZ +"          PgUp/PgDn\n\n" +
+                "TranslateZ       " + shape.translateZ +"          PgUp/PgDn\n" +
+                "Change Shape                 w\n\n" +
                 "Reset                          C\n" +
                 "Animate                       A\n" +
                 "Pause/Play                  Space\n\n" +
@@ -110,7 +111,7 @@ namespace MatrixTransformations
                     break;
                 case Keys.S:
                     shape.scale += mod * .01f;
-                    shape.scaleMatrix *= Matrix.ScaleMatrix(shape.scale);
+                    shape.scaleMatrix *= Matrix.ScaleMatrix(mod);
                     break;
                 case Keys.X:
                     shape.rotateX += mod;
@@ -148,19 +149,33 @@ namespace MatrixTransformations
                     shape.translateZ -= 1;
                     shape.translationMatrix *= Matrix.TranslateMatrix(new Vector(0, 0, -1));
                     break;
-                case Keys.R: shape.r += mod;
+                case Keys.R: 
+                    shape.r += mod;
                     break;
-                case Keys.D: shape.d += mod;
+                case Keys.D: 
+                    shape.d += mod;
                     break;
-                case Keys.P: shape.phi += mod;
+                case Keys.P: 
+                    shape.phi += mod;
                     break;
-                case Keys.T: shape.theta += mod;
+                case Keys.T: 
+                    shape.theta += mod;
                     break;
-                case Keys.C: animation.Stop();
+                case Keys.W:
+                    if (shape is Star)
+                        shape = new Cube(Color.Blue);
+                    else 
+                        shape = new Star(Color.Blue);
+                    animation = new Animation(shape);
                     break;
-                case Keys.A: animation.Start();
+                case Keys.C: 
+                    animation.Stop();
                     break;
-                case Keys.Space: animation.PausePlay();
+                case Keys.A: 
+                    animation.Start();
+                    break;
+                case Keys.Space: 
+                    animation.PausePlay();
                     break;
             }
 
