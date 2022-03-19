@@ -8,9 +8,9 @@ namespace MatrixTransformations
     public partial class Form1 : Form
     {
         // Axes
-        private readonly AxisX x_axis;
-        private readonly AxisY y_axis;
-        private readonly AxisZ z_axis;
+        private readonly Axis x_axis;
+        private readonly Axis y_axis;
+        private readonly Axis z_axis;
 
         // Object
         private Shape shape;
