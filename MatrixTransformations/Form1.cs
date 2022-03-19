@@ -54,7 +54,7 @@ namespace MatrixTransformations
                 "TranslateX       " + shape.translateX + "          Left/Right\n" +
                 "TranslateY       " + shape.translateY + "          Up/Down\n" +
                 "TranslateZ       " + shape.translateZ +"          PgUp/PgDn\n" +
-                "Change Shape                 w\n\n" +
+                "Change Shape            w\n\n" +
                 "Reset                          C\n" +
                 "Animate                       A\n" +
                 "Pause/Play                  Space\n\n" +
