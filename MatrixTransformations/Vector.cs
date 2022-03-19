@@ -45,7 +45,7 @@ namespace MatrixTransformations
             return $"/{x}\\\n" +
                    $"|{y}|\n" +
                    $"|{z}|\n" +
-                  $"\\{w}/\n";
+                   $"\\{w}/\n";
         }
     }
 }
