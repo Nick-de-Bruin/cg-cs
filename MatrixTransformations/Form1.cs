@@ -111,7 +111,7 @@ namespace MatrixTransformations
                     break;
                 case Keys.S:
                     shape.scale += mod * .01f;
-                    shape.scaleMatrix *= Matrix.ScaleMatrix(mod);
+                    shape.scaleMatrix *= Matrix.ScaleMatrix(mod * .01f);
                     break;
                 case Keys.X:
                     shape.rotateX += mod;
