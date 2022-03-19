@@ -50,9 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
-    <Compile Include="AxisX.cs" />
-    <Compile Include="AxisY.cs" />
-    <Compile Include="AxisZ.cs" />
+    <Compile Include="Axis.cs" />
     <Compile Include="Cube.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

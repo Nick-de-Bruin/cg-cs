@@ -9,7 +9,7 @@ namespace MatrixTransformations
 {
     internal class Star : Shape
     {
-        private List<Vector> _vertexbuffer = new List<Vector>() 
+        private readonly List<Vector> _vertexbuffer = new List<Vector>() 
         { 
             new Vector(1, 1, 0), // 0
             new Vector(1, -1, 0), // 1
